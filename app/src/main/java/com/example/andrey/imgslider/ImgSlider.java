@@ -11,14 +11,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.animation.OvershootInterpolator;
 import android.widget.SeekBar;
-import android.widget.Toast;
-
 import com.daimajia.slider.library.SliderLayout;
 import com.example.andrey.imgslider.fragment.FileFragment;
 import com.example.andrey.imgslider.fragment.SlaiderFragment;
@@ -38,7 +33,7 @@ public class ImgSlider extends AppCompatActivity {
     private final int BUTTONFILE  = 2;
     private final int FILEFRAGMENT = 0;
     private final int SLAIDERFRAGMENT = 1;
-    private int howFragment;
+    private int howFragment = SLAIDERFRAGMENT;
     static public Context CONTEXT;
     private FloatingActionMenu mFloatingMenu;
     private FragmentTransaction fTrans;
@@ -56,19 +51,8 @@ public class ImgSlider extends AppCompatActivity {
         slaiderFragment = new SlaiderFragment();
         fileFragment = new FileFragment();
         startFragment(slaiderFragment);
-        howFragment = SLAIDERFRAGMENT;
 
-    }
 
-    private void startFragment(Fragment fragment){
-        fTrans = getFragmentManager().beginTransaction();
-        fTrans.replace(R.id.linearLayout1, fragment);
-        fTrans.commit();
-        if(howFragment ==SLAIDERFRAGMENT){
-            howFragment = FILEFRAGMENT;
-        }else{
-            howFragment = SLAIDERFRAGMENT;
-        }
     }
 
     private void createFloatingActionButton() {
@@ -134,7 +118,6 @@ public class ImgSlider extends AppCompatActivity {
 
         });
     }
-
 
     @Override
     protected Dialog onCreateDialog(int id) {
@@ -232,6 +215,17 @@ public class ImgSlider extends AppCompatActivity {
         return null;
     }
 
+
+    private void startFragment(Fragment fragment){
+        fTrans = getFragmentManager().beginTransaction();
+        fTrans.replace(R.id.linearLayout1, fragment);
+        fTrans.commit();
+        if(howFragment ==SLAIDERFRAGMENT){
+            howFragment = FILEFRAGMENT;
+        }else{
+            howFragment = SLAIDERFRAGMENT;
+        }
+    }
 
 
 

@@ -46,22 +46,27 @@ public class SlaiderFragment extends Fragment implements BaseSliderView.OnSlider
         sliderShow.setPresetTransformer(settings.getString(ANIMATION,"Default"));
         sliderShow.setDuration(settings.getInt(DURATION, 3) * 1000);
         url_maps = new HashMap();
-if(FileFragment.IMGFILE == null) {
+if(FileFragment.IMGFILE != null  && FileFragment.IMGFILE.listFiles(imgFilter).length>0) {
+
+    File[] ingList = FileFragment.IMGFILE.listFiles(imgFilter);
+    url_maps.clear();
+    for(int i = 0; i<ingList.length;i++) {
+        Uri uri = Uri.fromFile(ingList[i]);
+        url_maps.put(ingList[i].getName(), uri.toString());
+    }
+
+    sliderSet(sliderShow, url_maps);
+
+
+} else{
     url_maps.clear();
     url_maps.put("Hannibal", "http://static2.hypable.com/wp-content/uploads/2013/12/hannibal-season-2-release-date.jpg");
     url_maps.put("Big Bang Theory", "http://tvfiles.alphacoders.com/100/hdclearart-10.png");
     url_maps.put("House of Cards", "http://cdn3.nflximg.net/images/3093/2043093.jpg");
     url_maps.put("Game of Thrones", "http://images.boomsbeat.com/data/images/full/19640/game-of-thrones-season-4-jpg.jpg");
     sliderSet(sliderShow, url_maps);
-} else{
-    File[] ingList = FileFragment.IMGFILE.listFiles(imgFilter);
-    url_maps.clear();
-    for(int i = 0; i<ingList.length;i++){
-        Uri uri = Uri.fromFile(ingList[i]);
-        url_maps.put(ingList[i].getName(),uri.toString());
 
-    }
-    sliderSet(sliderShow, url_maps);
+
 
 }
 
