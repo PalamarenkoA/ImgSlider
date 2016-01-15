@@ -166,7 +166,7 @@ public class ImgSlider extends AppCompatActivity implements BaseSliderView.OnSli
                 final AlertDialog.Builder builderd = new AlertDialog.Builder(this);
                 final SeekBar seekBar = new SeekBar (this);
 
-                String title;
+               String title;
                 if(settings.getInt(DURATION,3) ==1){
                     title = "Смена изображения каждую секунду";
                 }else{
