@@ -13,9 +13,11 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.example.andrey.imgslider.ImgFilter;
 import com.example.andrey.imgslider.ImgSlider;
 import com.example.andrey.imgslider.R;
 
+import java.io.File;
 import java.util.HashMap;
 
 
@@ -24,7 +26,8 @@ public class SlaiderFragment extends Fragment implements BaseSliderView.OnSlider
     private SharedPreferences settings;
     private final String ANIMATION = "ANIMATION";
     private final String DURATION = "DURATION";
-
+    private HashMap<String,String> url_maps;
+    ImgFilter imgFilter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,18 +40,30 @@ public class SlaiderFragment extends Fragment implements BaseSliderView.OnSlider
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_slaider, container, false);
+        imgFilter = new ImgFilter();
         settings = getActivity().getPreferences(Context.MODE_PRIVATE);
         sliderShow = (SliderLayout) v.findViewById(R.id.slider);
         sliderShow.setPresetTransformer(settings.getString(ANIMATION,"Default"));
-        sliderShow.setDuration(settings.getInt(DURATION,3)*1000);
-        HashMap<String,String> url_maps = new HashMap();
+        sliderShow.setDuration(settings.getInt(DURATION, 3) * 1000);
+        url_maps = new HashMap();
+if(FileFragment.IMGFILE == null) {
+    url_maps.clear();
+    url_maps.put("Hannibal", "http://static2.hypable.com/wp-content/uploads/2013/12/hannibal-season-2-release-date.jpg");
+    url_maps.put("Big Bang Theory", "http://tvfiles.alphacoders.com/100/hdclearart-10.png");
+    url_maps.put("House of Cards", "http://cdn3.nflximg.net/images/3093/2043093.jpg");
+    url_maps.put("Game of Thrones", "http://images.boomsbeat.com/data/images/full/19640/game-of-thrones-season-4-jpg.jpg");
+    sliderSet(sliderShow, url_maps);
+} else{
+    File[] ingList = FileFragment.IMGFILE.listFiles(imgFilter);
+    url_maps.clear();
+    for(int i = 0; i<ingList.length;i++){
+        Uri uri = Uri.fromFile(ingList[i]);
+        url_maps.put(ingList[i].getName(),uri.toString());
 
-        url_maps.put("Hannibal", "http://static2.hypable.com/wp-content/uploads/2013/12/hannibal-season-2-release-date.jpg");
-        url_maps.put("Big Bang Theory", "http://tvfiles.alphacoders.com/100/hdclearart-10.png");
-        url_maps.put("House of Cards", "http://cdn3.nflximg.net/images/3093/2043093.jpg");
-        url_maps.put("Game of Thrones", "http://images.boomsbeat.com/data/images/full/19640/game-of-thrones-season-4-jpg.jpg");
-        sliderSet(sliderShow,url_maps);
+    }
+    sliderSet(sliderShow, url_maps);
 
+}
 
 
 
