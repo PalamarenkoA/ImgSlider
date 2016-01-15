@@ -14,15 +14,25 @@
     tools:showIn="@layout/activity_img_slider"
     android:orientation="vertical">
 
-
-
-
-
-    <com.daimajia.slider.library.SliderLayout
-        android:id="@+id/slider"
+    <FrameLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_weight="1">
+
+        <FrameLayout
+            android:id="@+id/folder"
+            android:name="ua.sinoptik.mediaplayer.MusikPlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+           >
+        </FrameLayout>
+
+    </FrameLayout>
 
 
 </LinearLayout>

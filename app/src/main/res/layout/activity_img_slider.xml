@@ -29,7 +29,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email" />
+        android:background="#8f8686"
+        android:src="@drawable/ic_pl"
+        android:alpha="0.5"
+        android:adjustViewBounds="false"
+        app:backgroundTint="#a67d7d" />
 
 
 
