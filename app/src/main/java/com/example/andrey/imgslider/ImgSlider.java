@@ -7,10 +7,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.SeekBar;
@@ -19,7 +21,6 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.example.andrey.imgslider.fragment.FileFragment;
 import com.example.andrey.imgslider.fragment.SlaiderFragment;
-
 import java.util.HashMap;
 
 import it.sephiroth.android.library.floatingmenu.FloatingActionItem;
@@ -61,11 +62,14 @@ public class ImgSlider extends AppCompatActivity implements BaseSliderView.OnSli
     private FileFragment fileFragment;
     FloatingActionButton fab;
 
-     @Override
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_img_slider);
         CONTEXT = this;
+        Log.d("lll", String.valueOf(Environment.getExternalStorageState()));
         createFloatingActionButton();
         settings = getPreferences(MODE_PRIVATE);
         createFloatingMenu();

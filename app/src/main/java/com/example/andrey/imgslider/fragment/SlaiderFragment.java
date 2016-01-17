@@ -91,16 +91,29 @@ public class SlaiderFragment extends Fragment implements BaseSliderView.OnSlider
             sliderSetRes(sliderShow, hashMapRes);
             break;
         case ImgSlider.FILE_SLAIDS:
+            try {
 
-            if(settings.getString(ImgSlider.FILE,null) != null&&  new File(settings.getString(ImgSlider.FILE,null)).listFiles(imgFilter).length>0) {
-            File file = new File(settings.getString(ImgSlider.FILE,null));
-                File[] ingList = file.listFiles(imgFilter);
-                url_maps.clear();
-                for(int i = 0; i<ingList.length;i++) {
-                    Uri uri = Uri.fromFile(ingList[i]);
-                    url_maps.put(ingList[i].getName(), uri.toString());
-                }
-                sliderSet(sliderShow, url_maps);}else{
+                if(settings.getString(ImgSlider.FILE,null) != null&& new File(settings.getString(ImgSlider.FILE,null)).listFiles(imgFilter).length>0) {
+                    File file = new File(settings.getString(ImgSlider.FILE,null));
+                    File[] ingList = file.listFiles(imgFilter);
+                    url_maps.clear();
+                    for(int i = 0; i<ingList.length;i++) {
+                        Uri uri = Uri.fromFile(ingList[i]);
+                        url_maps.put(ingList[i].getName(), uri.toString());
+                    }
+                    sliderSet(sliderShow, url_maps);}else{
+                        HashMap<String,Integer> hashMapResF = new HashMap<>();
+                        hashMapResF.put("Обезьяна",R.drawable.img1);
+                        hashMapResF.put("Белка",R.drawable.img2);
+                        hashMapResF.put("Дикая кошка", R.drawable.img3);
+                        hashMapResF.put("Тигр",R.drawable.img4);
+                        hashMapResF.put("Слоненок",R.drawable.img5);
+
+                        sliderShow.removeAllSliders();
+                        sliderSetRes(sliderShow, hashMapResF);
+                    }
+
+            }catch (Exception e){
                 HashMap<String,Integer> hashMapResF = new HashMap<>();
                 hashMapResF.put("Обезьяна",R.drawable.img1);
                 hashMapResF.put("Белка",R.drawable.img2);
@@ -110,8 +123,8 @@ public class SlaiderFragment extends Fragment implements BaseSliderView.OnSlider
 
                 sliderShow.removeAllSliders();
                 sliderSetRes(sliderShow, hashMapResF);
-            }
 
+            }
     }
 
 

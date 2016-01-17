@@ -42,6 +42,7 @@ public class FileFragment extends Fragment {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,49 +55,53 @@ public class FileFragment extends Fragment {
         return v;
     }
 
-    private void createListAndClicable(final File file){
-        if( file.isDirectory()) {
-            fileList = new ArrayList();
-            directoryList = new ArrayList();
-            for (int i = 0; i < file.listFiles().length; i++) {
-                directoryList.add(String.valueOf(file.listFiles()[i]));
-                if(file.listFiles()[i].isFile()){
-                    fileList.add(String.valueOf(file.listFiles()[i]));
+    private void createListAndClicable(final File file) {
+        try {
+
+            if (file.isDirectory() && file != null) {
+                fileList = new ArrayList();
+                directoryList = new ArrayList();
+                for (int i = 0; i < file.listFiles().length; i++) {
+                    directoryList.add(String.valueOf(file.listFiles()[i]));
+                    if (file.listFiles()[i].isFile()) {
+                        fileList.add(String.valueOf(file.listFiles()[i]));
+                    }
                 }
+                arrayAdapter = new FileAdapter(ImgSlider.CONTEXT, directoryList);
+                listView.setAdapter(arrayAdapter);
+
+
             }
-            arrayAdapter = new FileAdapter(ImgSlider.CONTEXT,directoryList);
-            listView.setAdapter(arrayAdapter);
+            back.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!(file.getPath().equals("/"))) {
+                        createListAndClicable(file.getParentFile());
+                    }
+                }
+            });
 
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View itemClicked, int position,
+                                        long id) {
 
+                    if (new File(directoryList.get(position)).isDirectory()) {
+                        imgFile = new File(directoryList.get(position));
+                        SharedPreferences.Editor ed = settings.edit();
+                        ed.putString(ImgSlider.FILE, String.valueOf(imgFile));
+                        ed.commit();
+
+                        createListAndClicable(imgFile);
+
+                    }
+                }
+
+            });
+        } catch (Exception e) {
+            createListAndClicable(new File(file.getParent()));
         }
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!(file.getPath().equals("/"))) {
-                    createListAndClicable(file.getParentFile());
-                }
-            }
-        });
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View itemClicked, int position,
-                                    long id) {
-
-                if (new File(directoryList.get(position)).isDirectory()) {
-                    imgFile = new File(directoryList.get(position));
-                    SharedPreferences.Editor ed = settings.edit();
-                    ed.putString(ImgSlider.FILE, String.valueOf(imgFile));
-                    ed.commit();
-
-                    createListAndClicable(imgFile);
-
-                }
-            }
-
-        });
     }
-
-
 
 }
