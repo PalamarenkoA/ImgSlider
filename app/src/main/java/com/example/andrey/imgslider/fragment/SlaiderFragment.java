@@ -5,17 +5,16 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
-import com.example.andrey.imgslider.DescriptionAnim;
-import com.example.andrey.imgslider.ImgFilter;
+import com.example.andrey.imgslider.otherClass.DescriptionAnim;
+import com.example.andrey.imgslider.otherClass.ImgFilter;
 import com.example.andrey.imgslider.ImgSlider;
 import com.example.andrey.imgslider.R;
 
@@ -92,9 +91,10 @@ public class SlaiderFragment extends Fragment implements BaseSliderView.OnSlider
             sliderSetRes(sliderShow, hashMapRes);
             break;
         case ImgSlider.FILE_SLAIDS:
-            if(FileFragment.IMGFILE != null  && FileFragment.IMGFILE.listFiles(imgFilter).length>0) {
 
-                File[] ingList = FileFragment.IMGFILE.listFiles(imgFilter);
+            if(settings.getString(ImgSlider.FILE,null) != null&&  new File(settings.getString(ImgSlider.FILE,null)).listFiles(imgFilter).length>0) {
+            File file = new File(settings.getString(ImgSlider.FILE,null));
+                File[] ingList = file.listFiles(imgFilter);
                 url_maps.clear();
                 for(int i = 0; i<ingList.length;i++) {
                     Uri uri = Uri.fromFile(ingList[i]);

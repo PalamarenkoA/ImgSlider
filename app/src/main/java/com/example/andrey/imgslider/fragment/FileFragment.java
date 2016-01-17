@@ -2,9 +2,12 @@ package com.example.andrey.imgslider.fragment;
 
 
 import android.app.Fragment;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,17 +21,19 @@ import com.example.andrey.imgslider.R;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
 
 
 public class FileFragment extends Fragment {
-    public static File IMGFILE;
+    private File imgFile;
     private File currentDirectory = new File("/sdcard/");
     private FileAdapter arrayAdapter;
     private ArrayList<String> directoryList;
     private ListView listView;
     private ArrayList<String> fileList;
     private Button back;
-
+    private SharedPreferences settings;
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -43,6 +48,7 @@ public class FileFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_file, container, false);
         back = (Button) v.findViewById(R.id.button);
         listView = (ListView) v.findViewById(R.id.listView3);
+        settings = getActivity().getPreferences(Context.MODE_PRIVATE);
         createListAndClicable(currentDirectory);
 
         return v;
@@ -78,8 +84,12 @@ public class FileFragment extends Fragment {
                                     long id) {
 
                 if (new File(directoryList.get(position)).isDirectory()) {
-                    IMGFILE = new File(directoryList.get(position));
-                    createListAndClicable(IMGFILE);
+                    imgFile = new File(directoryList.get(position));
+                    SharedPreferences.Editor ed = settings.edit();
+                    ed.putString(ImgSlider.FILE, String.valueOf(imgFile));
+                    ed.commit();
+
+                    createListAndClicable(imgFile);
 
                 }
             }

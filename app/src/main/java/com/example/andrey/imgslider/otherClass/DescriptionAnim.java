@@ -1,4 +1,4 @@
-package com.example.andrey.imgslider;
+package com.example.andrey.imgslider.otherClass;
 
 import android.util.Log;
 import android.view.View;

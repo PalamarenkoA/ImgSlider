@@ -33,6 +33,7 @@ public class ImgSlider extends AppCompatActivity implements BaseSliderView.OnSli
     public  final static String ANIMATION = "ANIMATION";
     public  final static String DURATION = "DURATION";
     public  final static String SLIDER = "SLIDER";
+    public  final static String FILE = "FILE";
     public  final static int FILE_SLAIDS = 4;
     public  final static int DEFAULT_SLAIDS = 3;
     public  final static int SQUIRREL_SLAIDS = 2;
@@ -60,10 +61,7 @@ public class ImgSlider extends AppCompatActivity implements BaseSliderView.OnSli
     private FileFragment fileFragment;
     FloatingActionButton fab;
 
-     public interface newImg{
-     void setNewImg(int id);
-    }
-    @Override
+     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_img_slider);

@@ -1,4 +1,4 @@
-package com.example.andrey.imgslider;
+package com.example.andrey.imgslider.otherClass;
 
 import java.io.File;
 import java.io.FileFilter;
